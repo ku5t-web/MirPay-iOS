@@ -198,6 +198,7 @@ public struct WalletView: View {
     // Металлическая карточка
     private func cardView(_ card: WalletCard) -> some View {
         let isPrimary = wallet.primaryCardID == card.id
+        return VStack(alignment: .leading, spacing: 28) {
         VStack(alignment: .leading, spacing: 28) {
 
             HStack {
@@ -284,7 +285,9 @@ private struct AddCardView: View {
                     TextField("Платёжная система", text: $paymentSystem)
 
                     TextField("Последние 4 цифры", text: $lastFourDigits)
+                        #if os(iOS)
                         .keyboardType(.numberPad)
+#endif
                         .onChange(of: lastFourDigits) { _, newValue in
                             lastFourDigits = String(
                                 newValue.filter(\.isNumber).prefix(4)
